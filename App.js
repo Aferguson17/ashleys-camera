@@ -127,10 +127,7 @@ renderTopBar = () =>
 renderBottomBar = () =>
 <View style={styles.bottomBar}>
   <View style={{ flex: 2 }}>
-    <TouchableOpacity
-      onPress={this.takePicture}
-      style={{ alignSelf: 'center' }}
-    >
+    <TouchableOpacity onPress={this.takePicture}style={{ alignSelf: 'center' }}>
       <Ionicons name="ios-radio-button-on" size={70} color="white" />
     </TouchableOpacity>
   </View> 
@@ -223,6 +220,7 @@ fontWeight: 'bold'
 },
 
 bottomButton: {
+flex: 0.8, 
 height: 40, 
 justifyContent: 'center',
 alignItems: 'center',

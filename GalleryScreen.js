@@ -45,7 +45,7 @@ export default class Gallery extends React.Component {
       await Promise.all(promises);
       alert('Photos have been saved to your library!');
     } else {
-      alert('There are no photos to save!');
+      alert('You have not selected any photos!');
     }
   };
 
@@ -65,7 +65,7 @@ export default class Gallery extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={this.saveToGallery}>
-          <Text style={styles.whiteText}>Press here to save to your library!</Text>
+          <Text style={styles.whiteText}>Select images, press HERE to save!</Text>
           </TouchableOpacity>
         </View>
 
