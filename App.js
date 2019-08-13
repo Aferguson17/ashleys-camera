@@ -1,8 +1,8 @@
-import { Constants, Camera, FileSystem, Permissions} from 'expo';
+import { Camera, FileSystem, Permissions} from 'expo';
 import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
 import GalleryScreen from './GalleryScreen';
-import { Image, StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
-import { Ionicons, MaterialIcons, Foundation, Octicsons} from '@expo/vector-icons';
+import { Ionicons, MaterialIcons, Foundation} from '@expo/vector-icons';
 
 const flashModeOrder = {
   off: 'on',
@@ -48,18 +48,19 @@ getRatios = async () => {
   return ratios;
 };
 
-toggleView = () => this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
-
 toggleFlash = () => this.setState({ flash: flashModeOrder [this.state.flash] });
 
 toggleFacing = () => this.setState({ type: this.state.type === 'back' ? 'front' : 'back' });
 
 toggleFocus = () => this.setState({ autoFocus: this.state.autoFocus === 'on' ? 'off' : 'on' });
 
+toggleView = () => this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
+
 takePicture = () => {
   if (this.camera) {
     this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
   }
+
 };
 
 handleMountError = ({ message }) => console.error(message);
@@ -84,20 +85,6 @@ collectPictureSizes = async () => {
     this.setState({ pictureSizes, pictureSizeId, pictureSize: pictureSizes[pictureSizeId] });
   }
 };
-
-previousPictureSize = () => this.changePictureSize(1);
-nextPictureSize = () => this.changePictureSize(-1);
-
-changePictureSize = direction => {
-  let newId = this.state.pictureSizeId + direction;
-  const length = this.state.pictureSizes.length;
-  if (newId >= length) {
-    newId = 0;
-  } else if (newId < 0) {
-    newId = length -1;
-  }
-  this.setState({ pictureSize: this.state.pictureSizes[newId], pictureSizeId: newId });
-}
 
 renderGallery() {
   return <GalleryScreen onPress={this.toggleView.bind(this)} />;
@@ -126,15 +113,17 @@ renderTopBar = () =>
 
 renderBottomBar = () =>
 <View style={styles.bottomBar}>
-  <View style={{ flex: 2 }}>
-    <TouchableOpacity onPress={this.takePicture}style={{ alignSelf: 'center' }}>
-      <Ionicons name="ios-radio-button-on" size={70} color="white" />
+  <View>  
+    <Text style={{ color: "white", fontWeight: 'bold', paddingTop: 10, fontSize: 20 }}>Smile!</Text>
+  </View>
+  <View>
+    <TouchableOpacity onPress={this.takePicture}>
+      <Ionicons name="ios-radio-button-on" size={50} color="white" />
     </TouchableOpacity>
   </View> 
-
   <TouchableOpacity style={styles.bottomButton} onPress={this.toggleView}>
     <View>
-      <Foundation name="thumbnails" size={30} style={{color: 'white', alignSelf: 'center'}} />
+      <Foundation name="thumbnails" size={40} style={{color: 'white'}} />
       {this.state.newPhotos && <View style={styles.newPhotosDot}/>}
     </View>
   </TouchableOpacity>
@@ -174,71 +163,71 @@ render = () =>  {
 }
 
 const styles = StyleSheet.create({
-container: {
-flex: 4,
-backgroundColor: '#000',
-},
+  container: {
+  flex: 1,
+  backgroundColor: '#000',
+  },
 
-camera: {
-flex: 2,
-justifyContent: 'space-between',
-},
+  topBar: {
+  backgroundColor: '#24ab9e',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  paddingTop: 15,
+  },
 
-topBar: {
-backgroundColor: '#24ab9e',
-flexDirection: 'row',
-justifyContent: 'space-around',
-paddingTop: 15,
-},
+  toggleButton: {
+  flex: 0.25,
+  height: 40,
+  marginHorizontal: 2,
+  marginBottom: 10,
+  marginTop: 20,
+  padding: 5,
+  alignItems: 'center',
+  justifyContent: 'center',
+  },
+  
+  autoFocusLabel: {
+  fontSize: 20,
+  fontWeight: 'bold'
+  },
 
-bottomBar: {
-backgroundColor: '#24ab9e',
-flex: 0,
-flexDirection: 'row',
-},
+  bottomBar: {
+  backgroundColor: '#24ab9e',
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  paddingTop: 15,
+  },
 
-gallery: {
-flex: 1,
-flexDirection: 'row',
-flexWrap: 'wrap',
-},
+  camera: {
+  flex: 1,
+  justifyContent: 'space-between',
+  },
 
-toggleButton: {
-flex: 2,
-height: 40,
-marginHorizontal: 10,
-marginBottom: 10,
-marginTop: 20,
-padding: 5,
-alignItems: 'center',
-justifyContent: 'center',
-},
+  bottomButton: {
+  flex: 0.2, 
+  height: 58, 
+  justifyContent: 'center',
+  alignItems: 'center',
+  },
 
-autoFocusLabel: {
-fontSize: 15,
-fontWeight: 'bold'
-},
+  gallery: {
+  flex: 0.1,
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  },
 
-bottomButton: {
-flex: 0.8, 
-height: 40, 
-justifyContent: 'center',
-alignItems: 'center',
-},
+  newPhotosDot: {
+  position: 'absolute',
+  top: 0,
+  width: 10,
+  height: 10,
+  backgroundColor: '#FF0000'
+  },
 
-newPhotosDot: {
-position: 'absolute',
-top: 0,
-width: 10,
-height: 10,
-backgroundColor: '#FF0000'
-},
-
-noPermissions: {
-flex: 1,
-alignItems:'center',
-justifyContent: 'center',
-padding: 10,
-},
-
+  noPermissions: {
+  flex: 1,
+  alignItems:'center',
+  justifyContent: 'center',
+  padding: 10,
+  },
 });

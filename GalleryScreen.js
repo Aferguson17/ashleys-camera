@@ -35,7 +35,7 @@ export default class Gallery extends React.Component {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       
       if (status !== 'granted') {
-        throw new Error('CAMERA_ROLL permissions denied!.');
+        throw new Error('CAMERA_ROLL permissions denied.');
       }
 
       const promises = photos.map(photoUri => {
@@ -61,7 +61,7 @@ export default class Gallery extends React.Component {
       <View style={styles.container}>
         <View style={styles.navbar}>
           <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
-            <MaterialIcons name="arrow-back" size={25} color="white" />
+            <MaterialIcons name="arrow-back" size={30} color="white" />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={this.saveToGallery}>
@@ -83,14 +83,16 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: 20,
-      backgroundColor: 'black',
+      backgroundColor: 'white',
     },
+
     navbar: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: '#24ab9e',
     },
+
     pictures: {
       flex: 1,
       flexWrap: 'wrap',
@@ -98,9 +100,12 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       paddingVertical: 4,
     },
+
+//Select images, press HERE to save!
     button: {
-      padding: 20,
+      padding: 25,
     },
+
     whiteText: {
       color: 'white',
       fontWeight: 'bold',

@@ -61,7 +61,6 @@ getImageDimensions = ({ width, height }) => {
         return (
             <TouchableOpacity
               style={styles.pictureWrapper}
-              onLongPress={this.detectFace}
               onPress={this.toggleSelection}
               activeOpacity={1}
             >
